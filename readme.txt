@@ -1,5 +1,6 @@
 pip install fastapi
 pip install "uvicorn[standard]"
+pip install --user firebase-admin
 uvicorn main:app --reload
 
 docker:
