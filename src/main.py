@@ -123,3 +123,29 @@ async def get_user(first_name:str, last_name:str, email:str, username:str, passw
 @app.get("/items")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
+
+
+#//////////////////////////// Ben /////////////////////
+
+@app.get("/additem")
+def addItem(item_name:str, price:str, company:str,super_id:str):
+    try:
+        ref = db.reference(f'Supers/{super_id}/products/{item_name}')
+        ref.update({company:price})
+    except:
+        return {"add_item": 'error'}
+
+    return {"add_item": "good"}
+
+
+@app.get("/deleteitem")
+def addItem(item_name:str, company:str, super_id:str):
+    try:
+        ref = db.reference(f'Supers/{super_id}/products/{item_name}/{company}')
+        ref.delete()
+    except:
+        return {"delete_item": 'error'}
+
+    return {"delete_item": "good"}
+
+#//////////////////////////////////////////
