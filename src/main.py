@@ -3,6 +3,7 @@ from fastapi import FastAPI
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
+from modules.user import User
 
 app = FastAPI()
 cred = credentials.Certificate('firebase-sdk.json')
@@ -12,6 +13,13 @@ firebase_admin.initialize_app(cred, {
 })
 
 
+@app.get("/signin/getuser")
+async def get_sighin_user(username:str, password:str):
+    print("1")
+    myUser = User({})
+    print("11")
+    return myUser.get_user(username, password)
+    
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
@@ -88,6 +96,7 @@ async def get_user(first_name:str, last_name:str, email:str, username:str, passw
         return {"Hello": 'error'}
 
     return {"Hello": first_name}
+
 
 @app.get("/items")
 def read_item(item_id: int, q: Union[str, None] = None):

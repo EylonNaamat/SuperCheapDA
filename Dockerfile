@@ -1,5 +1,6 @@
 FROM python:3.9-slim
 COPY  ./src /SuperCheapDA/src
+COPY  ./modules /SuperCheapDA/modules
 COPY ./requirements.txt /SuperCheapDA
 COPY ./firebase-sdk.json /SuperCheapDA
 
