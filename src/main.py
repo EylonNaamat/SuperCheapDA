@@ -40,6 +40,14 @@ async def add_super_to_city(old_city:str, new_city:str, Super_Id:str):
     stam =  tempMySuper.move_super(new_city,Super_Id)
     return stam
 
+@app.get("/myaccount/setuser")
+async def insertuser(first_name:str, last_name:str, email:str, username:str, password:str, city:str, birth_date:str, gender:str, is_manager:str, super_id:str):
+    temp_user = User({'first_name':first_name, 'last_name':last_name, 'email':email, 'username':username,
+            'password':password, 'city':city, 'birth_date':birth_date, 'gender':gender, 'is_manager':is_manager,
+            'super_id':super_id})
+    stam = temp_user.update_user()
+    return stam
+
 
 # //////////////////////michael////////////////////////////
 @app.get("/")
