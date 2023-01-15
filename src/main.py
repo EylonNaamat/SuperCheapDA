@@ -4,6 +4,8 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 from modules.user import User
+from modules.super import Super
+from modules.city import City
 
 app = FastAPI()
 cred = credentials.Certificate('firebase-sdk.json')
@@ -12,7 +14,7 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://supercheapfirebase-default-rtdb.firebaseio.com/'
 })
 
-
+# //////////////////////michael////////////////////////////
 @app.get("/signin/getuser")
 async def get_sighin_user(username:str, password:str):
     print("1")
@@ -20,6 +22,26 @@ async def get_sighin_user(username:str, password:str):
     print("11")
     return myUser.get_user(username, password)
     
+@app.get("/mysuper/getsuper")
+async def get_super_info(Super_Id:str):
+    tempMySuper = Super({})
+    stam =  tempMySuper.get_super(Super_Id)
+    return stam
+
+@app.get("/mysuper/setsuper")
+async def set_super_info(Super_Id:str, super_name:str, super_city:str):
+    tempMySuper = Super({})
+    stam =  tempMySuper.set_super(Super_Id,super_name,super_city)
+    return stam
+
+@app.get("/mysuper/movesuper")
+async def add_super_to_city(old_city:str, new_city:str, Super_Id:str):
+    tempMySuper = City(old_city)
+    stam =  tempMySuper.move_super(new_city,Super_Id)
+    return stam
+
+
+# //////////////////////michael////////////////////////////
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
