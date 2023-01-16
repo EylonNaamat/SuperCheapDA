@@ -24,5 +24,14 @@ class User:
             return ans_user
         except:
             return {"ans":"dabname"}
+    
+    def update_user(self):
+        try:
+            ref = db.reference('users')
+            user_ref = ref.child(self.user.get("username"))
+            user_ref.update(self.user)
+        except:
+            return {"ans": 'fail'}
+        return {"ans": 'work'}
 
 
