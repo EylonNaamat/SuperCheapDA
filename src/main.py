@@ -48,6 +48,16 @@ async def insertuser(first_name:str, last_name:str, email:str, username:str, pas
     stam = temp_user.update_user()
     return stam
 
+@app.get("/addcomment")
+async def add_comment(id_comment:str, super_name:str, super_city:str, user_username:str, grade, review:str):
+    tempSuper = Super({})
+    super_id = tempSuper.findsuperId(super_name,super_city)
+    if super_id == "fail":
+        return {"ans":"fail"}
+    stam =  tempSuper.add_comment(id_comment, super_id, user_username, grade, review)
+    return stam
+
+#http://localhost:5001/addcomment?id_comment=123456&super_name=bar%20col&super_city=Tel Aviv&user_username=Ariel&grade=hatzlaha&review=Ariel
 
 # //////////////////////michael////////////////////////////
 @app.get("/")
