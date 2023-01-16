@@ -1,6 +1,6 @@
 from firebase_admin import db
 
-class City:
+class City_super:
     def __init__(self,city) -> None:
         self.city = city
 
