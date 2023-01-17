@@ -54,3 +54,17 @@ class Super:
         except:
             return {"ans":"fail"}
         return {"ans":"work"}
+    
+    def getComments(self,super_name:str, super_city:str):
+        my_super_id = self.findsuperId(super_name,super_city)
+        ref=db.reference(f'Supers/{my_super_id}')
+        ref = ref.child("comments")
+        ans_comments = ref.get()
+        return ans_comments
+
+    def getSales(self,super_name:str, super_city:str):
+        my_super_id = self.findsuperId(super_name,super_city)
+        ref=db.reference(f'Supers/{my_super_id}')
+        ref = ref.child("Sales")
+        ans_sales = ref.get()
+        return ans_sales

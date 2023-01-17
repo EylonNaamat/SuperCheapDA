@@ -61,6 +61,19 @@ async def add_comment(id_comment:str, super_name:str, super_city:str, user_usern
 
 #http://localhost:5001/addcomment?id_comment=123456&super_name=bar%20col&super_city=Tel Aviv&user_username=Ariel&grade=hatzlaha&review=Ariel
 
+@app.get("/displaycomment")
+async def display_comment(super_name:str, super_city:str):
+    tempSuper = Super({})
+    stam =  tempSuper.getComments(super_name,super_city)
+    return stam
+
+@app.get("/displaysale")
+async def display_sale(super_name:str, super_city:str):
+    tempSuper = Super({})
+    stam =  tempSuper.getSales(super_name,super_city)
+    return stam
+
+
 # //////////////////////eylon////////////////////////////
 @app.get("/")
 def read_root():
