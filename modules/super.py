@@ -56,15 +56,27 @@ class Super:
         return {"ans":"work"}
     
     def getComments(self,super_name:str, super_city:str):
-        my_super_id = self.findsuperId(super_name,super_city)
-        ref=db.reference(f'Supers/{my_super_id}')
-        ref = ref.child("comments")
-        ans_comments = ref.get()
+        try:
+            my_super_id = self.findsuperId(super_name,super_city)
+            ref=db.reference(f'Supers/{my_super_id}')
+            ref = ref.child("comments")
+            ans_comments = ref.get()
+        except:
+            return {"ans":"fail"}
+        if ans_comments is None:
+            return {"ans":"fail"}
+        ans_comments["ans"]= "success"
         return ans_comments
 
     def getSales(self,super_name:str, super_city:str):
-        my_super_id = self.findsuperId(super_name,super_city)
-        ref=db.reference(f'Supers/{my_super_id}')
-        ref = ref.child("Sales")
-        ans_sales = ref.get()
+        try:
+            my_super_id = self.findsuperId(super_name,super_city)
+            ref=db.reference(f'Supers/{my_super_id}')
+            ref = ref.child("Sales")
+            ans_sales = ref.get()
+        except:
+            return {"ans":"fail"}
+        if ans_sales is None:
+            return {"ans":"fail"}
+        ans_sales["ans"]= "success"
         return ans_sales
