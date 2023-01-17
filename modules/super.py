@@ -17,6 +17,8 @@ class Super:
             newAns["ans"] = "work"
             newAns["super_name"] = str(ans_user.get("super_name"))
             newAns["super_city"] = str(ans_user.get("super_city"))
+            newAns["comments_size"] = str(ans_user.get("comments_size"))
+            newAns["super_rating"] = str(ans_user.get("super_rating"))
             return newAns
         except:
             return {"ans":"fail"}
@@ -37,13 +39,17 @@ class Super:
 
     def add_comment(self,id_comment:str, super_id:str, user_username:str, grade, review:str):
         try:
-            print(super_id)
+            old_super = self.get_super(super_id)
+            new_comments_size = int(old_super.get("comments_size"))+1
+            new_rate = ((float(old_super.get("super_rating"))*int(old_super.get("comments_size")))+int(grade))/new_comments_size
+            
+            ref=db.reference(f'Supers/{super_id}')
+            ref.update({"comments_size":new_comments_size})
+            ref.update({"super_rating":new_rate})
+
             ref = db.reference(f'Supers/{super_id}')
-            print("1")
             ref = ref.child("comments")
-            print(id_comment)
             ref = ref.child(id_comment)
-            print("4")
             ref.update({"id_comment":id_comment, "super_id":super_id, "user_username":user_username , "grade":grade, "review":review})
         except:
             return {"ans":"fail"}
