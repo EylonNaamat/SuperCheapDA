@@ -193,4 +193,40 @@ def addItem(item_name:str, company:str, super_id:str):
 
     return {"delete_item": "good"}
 
+
+@app.get("/dosale")
+def dosale(saleName:str, saleQuantity:str,priceSale:str,company:str,super_id:str):
+    try:
+        ref = db.reference(f'Supers/{super_id}/Sales/{saleName}/{company}')
+        ref.update({"quantity":saleQuantity,"price":priceSale})
+    except:
+        return {"do_sale": 'error'}
+
+    return {"do_sale": "good"}
+
+@app.get("/iscity")
+def iscity(city_name:str):
+    try:
+        ref = db.reference('cities')
+        user_ref = ref.child(city_name)
+        if user_ref.get() != None:
+            return {"is_city":"exists"}
+    except:
+        return {"is_city": "doesnt exists"}
+
+    return {"is_city": "doesnt exists"}
+
+@app.get("/isitem")
+def isitem(item_name:str):
+    try:
+        ref = db.reference('dict_product')
+        user_ref = ref.child(item_name)
+        if user_ref.get() != None:
+            return {"is_item":"exists"}
+    except:
+        return {"is_item": "doesnt exists"}
+
+    return {"is_item": "doesnt exists"}
+
+
 #//////////////////////////////////////////
