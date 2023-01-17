@@ -73,6 +73,21 @@ async def display_sale(super_name:str, super_city:str):
     stam =  tempSuper.getSales(super_name,super_city)
     return stam
 
+@app.get("/getnewcomments")
+async def get_new_comments(super_ID:str):
+    temp_super = Super({})
+    stam =  temp_super.get_super_new_comment(super_ID)
+    return stam
+
+#http://localhost:5001/getnewcomments?super_ID=00a0248a-3657-4b1d-8445-8b813bfd954e
+
+@app.get("/getcomment")
+async def get_comment(id_comment:str,super_ID:str):
+    temp_super = Super({})
+    stam =  temp_super.getComment(id_comment,super_ID)
+    return stam
+
+    
 
 # //////////////////////eylon////////////////////////////
 @app.get("/")

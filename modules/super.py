@@ -6,7 +6,7 @@ from firebase_admin import db
 class Super:
     def __init__(self, super) -> None:
         self.super = super
-
+# ///////////////////////////michael///////////////////////
     def get_super(self,Super_Id):
         try:
             ref = db.reference(f'Supers/{Super_Id}')
@@ -51,6 +51,12 @@ class Super:
             ref = ref.child("comments")
             ref = ref.child(id_comment)
             ref.update({"id_comment":id_comment, "super_id":super_id, "user_username":user_username , "grade":grade, "review":review})
+        
+            ref = db.reference(f'Supers/{super_id}')
+            ref = ref.child("new_comments")
+            ref = ref.child(id_comment)
+            ref.update({"id_comment":id_comment})
+
         except:
             return {"ans":"fail"}
         return {"ans":"work"}
@@ -68,6 +74,20 @@ class Super:
         ans_comments["ans"]= "success"
         return ans_comments
 
+    def get_super_new_comment(self,super_ID):
+        ref=db.reference(f'Supers/{super_ID}/new_comments')
+        data=ref.get()
+        ref.delete()
+        return data
+
+    def getComment(self,id_comment,super_ID):
+        ref=db.reference(f'Supers/{super_ID}')
+        ref = ref.child("comments")
+        ref = ref.child(id_comment)
+        data=ref.get()
+        return data
+
+# ///////////////////////////michael///////////////////////
     def getSales(self,super_name:str, super_city:str):
         try:
             my_super_id = self.findsuperId(super_name,super_city)
