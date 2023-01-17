@@ -23,3 +23,15 @@ class City:
             return {"ans":"fail"}
         return {"ans":"work"}
 
+    def iscity(city_name:str):
+        try:
+            ref = db.reference('cities')
+            user_ref = ref.child(city_name)
+            if user_ref.get() != None:
+                return {"is_city":"exists"}
+        except:
+            return {"is_city": "doesnt exists"}
+
+        return {"is_city": "doesnt exists"}
+
+

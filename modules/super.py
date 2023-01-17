@@ -80,3 +80,73 @@ class Super:
             return {"ans":"fail"}
         ans_sales["ans"]= "success"
         return ans_sales
+
+
+    def additem(self,item_name:str, price:str, company:str,super_id:str):
+        try:
+            ref = db.reference(f'Supers/{super_id}/products/{item_name}')
+            ref.update({company:price})
+        except:
+            return {"add_item": 'error'}
+
+        return {"add_item": "good"}
+
+    def delete_item(self,item_name:str, company:str, super_id:str):
+        try:
+            ref = db.reference(f'Supers/{super_id}/products/{item_name}/{company}')
+            ref.delete()
+        except:
+            return {"delete_item": 'error'}
+
+        return {"delete_item": "good"} 
+    def delete_sale(self,sale_name:str,super_id:str):
+        try:
+            ref = db.reference(f'Supers/{super_id}/Sales')
+            sale_ref = ref.child(sale_name)
+            if sale_ref.get() == None:
+                return {"delete_sale":"sale doesn't exists"}
+            else:
+                sale_ref.delete()
+        except:
+            return {"delete_sale": 'error'}
+
+        return {"delete_sale": "good"}
+
+    def dosale(self,item_name:str, saleQuantity:str,priceSale:str,company:str,sale_name:str,super_id:str):
+    #check if the sale already exists
+        try:
+            ref = db.reference(f'Supers/{super_id}/Sales')
+            user_ref = ref.child(sale_name)
+            if user_ref.get() != None:
+                return {"do_sale":"sale exists"}
+        except:
+            return {"do_sale": "error_search"}
+        #check if the itemname and company doesnt exists in this super    
+        try:
+            ref = db.reference(f'Supers/{super_id}/products/{item_name}')
+            user_ref = ref.child(company)
+            print(user_ref.get())
+            print(ref.get())
+            if user_ref.get() == None:
+                return {"do_sale":"doesnt exists"}
+        except:
+            return {"do_sale": "error_search"}
+        #try insert sale
+        try:
+            ref = db.reference(f'Supers/{super_id}/Sales/{sale_name}')
+            ref.update({"sale_name":sale_name,"item name":item_name,"company":company, "quantity":saleQuantity,"price":priceSale})
+        except:
+            return {"do_sale": 'error'}
+
+        return {"do_sale": "good"}
+
+    def isitem(self,item_name:str):
+        try:
+            ref = db.reference('dict_product')
+            user_ref = ref.child(item_name)
+            if user_ref.get() != None:
+                return {"is_item":"exists"}
+        except:
+            return {"is_item": "doesnt exists"}
+
+        return {"is_item": "doesnt exists"}

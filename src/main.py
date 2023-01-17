@@ -187,59 +187,40 @@ async def get_user(first_name:str, last_name:str, email:str, username:str, passw
 
 @app.get("/additem")
 def addItem(item_name:str, price:str, company:str,super_id:str):
-    try:
-        ref = db.reference(f'Supers/{super_id}/products/{item_name}')
-        ref.update({company:price})
-    except:
-        return {"add_item": 'error'}
-
-    return {"add_item": "good"}
+    super = Super({})
+    return super.additem(item_name,price,company,super_id)
 
 
 @app.get("/deleteitem")
-def addItem(item_name:str, company:str, super_id:str):
-    try:
-        ref = db.reference(f'Supers/{super_id}/products/{item_name}/{company}')
-        ref.delete()
-    except:
-        return {"delete_item": 'error'}
+def delete_item(item_name:str, company:str, super_id:str):
+    super = Super({})
+    return super.delete_item(item_name,company,super_id)
 
-    return {"delete_item": "good"}
+@app.get("/deletesale")
+def delete_sale(sale_name:str,super_id:str):
+    super = Super({})
+    return super.delete_sale(sale_name,super_id)
 
 
 @app.get("/dosale")
-def dosale(saleName:str, saleQuantity:str,priceSale:str,company:str,super_id:str):
-    try:
-        ref = db.reference(f'Supers/{super_id}/Sales/{saleName}/{company}')
-        ref.update({"quantity":saleQuantity,"price":priceSale})
-    except:
-        return {"do_sale": 'error'}
-
-    return {"do_sale": "good"}
+def dosale(item_name:str, saleQuantity:str,priceSale:str,company:str,sale_name:str,super_id:str):
+    super = Super({})
+    return super.dosale(item_name,saleQuantity,priceSale,company,sale_name,super_id)
 
 @app.get("/iscity")
 def iscity(city_name:str):
-    try:
-        ref = db.reference('cities')
-        user_ref = ref.child(city_name)
-        if user_ref.get() != None:
-            return {"is_city":"exists"}
-    except:
-        return {"is_city": "doesnt exists"}
+    city = City({})
 
-    return {"is_city": "doesnt exists"}
+    return city.iscity(city_name)
 
 @app.get("/isitem")
 def isitem(item_name:str):
-    try:
-        ref = db.reference('dict_product')
-        user_ref = ref.child(item_name)
-        if user_ref.get() != None:
-            return {"is_item":"exists"}
-    except:
-        return {"is_item": "doesnt exists"}
+    super = Super({})
+    return super.isitem(item_name)
 
-    return {"is_item": "doesnt exists"}
+
+
+
 
 
 #//////////////////////////////////////////
