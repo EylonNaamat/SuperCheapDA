@@ -23,7 +23,7 @@ class City:
             return {"ans":"fail"}
         return {"ans":"work"}
 
-    def iscity(city_name:str):
+    def iscity(this,city_name:str):
         try:
             ref = db.reference('cities')
             user_ref = ref.child(city_name)
