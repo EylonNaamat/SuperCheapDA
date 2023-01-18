@@ -19,36 +19,30 @@ firebase_admin.initialize_app(cred, {
 # //////////////////////michael////////////////////////////
 @app.get("/signin/getuser")
 async def get_sighin_user(username:str, password:str):
-    print("1")
     myUser = User({})
-    print("11")
     return myUser.get_user(username, password)
     
 @app.get("/mysuper/getsuper")
 async def get_super_info(Super_Id:str):
     tempMySuper = Super({})
-    stam =  tempMySuper.get_super(Super_Id)
-    return stam
+    return tempMySuper.get_super(Super_Id)
 
 @app.get("/mysuper/setsuper")
 async def set_super_info(Super_Id:str, super_name:str, super_city:str):
     tempMySuper = Super({})
-    stam =  tempMySuper.set_super(Super_Id,super_name,super_city)
-    return stam
+    return tempMySuper.set_super(Super_Id,super_name,super_city)
 
 @app.get("/mysuper/movesuper")
 async def add_super_to_city(old_city:str, new_city:str, Super_Id:str):
     tempMySuper = City(old_city)
-    stam =  tempMySuper.move_super(new_city,Super_Id)
-    return stam
+    return tempMySuper.move_super(new_city,Super_Id)
 
 @app.get("/myaccount/setuser")
 async def insertuser(first_name:str, last_name:str, email:str, username:str, password:str, city:str, birth_date:str, gender:str, is_manager:str, super_id:str):
     temp_user = User({'first_name':first_name, 'last_name':last_name, 'email':email, 'username':username,
             'password':password, 'city':city, 'birth_date':birth_date, 'gender':gender, 'is_manager':is_manager,
             'super_id':super_id})
-    stam = temp_user.update_user()
-    return stam
+    return temp_user.update_user()
 
 @app.get("/addcomment")
 async def add_comment(id_comment:str, super_name:str, super_city:str, user_username:str, grade, review:str):
@@ -56,37 +50,31 @@ async def add_comment(id_comment:str, super_name:str, super_city:str, user_usern
     super_id = tempSuper.findsuperId(super_name,super_city)
     if super_id == "fail":
         return {"ans":"fail"}
-    stam =  tempSuper.add_comment(id_comment, super_id, user_username, grade, review)
-    return stam
+    return tempSuper.add_comment(id_comment, super_id, user_username, grade, review)
 
 #http://localhost:5001/addcomment?id_comment=123456&super_name=bar%20col&super_city=Tel Aviv&user_username=Ariel&grade=hatzlaha&review=Ariel
 
 @app.get("/displaycomment")
 async def display_comment(super_name:str, super_city:str):
     tempSuper = Super({})
-    stam =  tempSuper.getComments(super_name,super_city)
-    return stam
+    return tempSuper.getComments(super_name,super_city)
 
 @app.get("/displaysale")
 async def display_sale(super_name:str, super_city:str):
     tempSuper = Super({})
-    stam =  tempSuper.getSales(super_name,super_city)
-    return stam
+    return tempSuper.getSales(super_name,super_city)
 
 @app.get("/getnewcomments")
 async def get_new_comments(super_ID:str):
     temp_super = Super({})
-    stam =  temp_super.get_super_new_comment(super_ID)
-    return stam
+    return temp_super.get_super_new_comment(super_ID)
 
 #http://localhost:5001/getnewcomments?super_ID=00a0248a-3657-4b1d-8445-8b813bfd954e
 
 @app.get("/getcomment")
 async def get_comment(id_comment:str,super_ID:str):
     temp_super = Super({})
-    stam =  temp_super.getComment(id_comment,super_ID)
-    return stam
-
+    return temp_super.getComment(id_comment,super_ID)
     
 
 # //////////////////////eylon////////////////////////////
